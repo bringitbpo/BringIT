@@ -1,13 +1,740 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BringIT – Back Office Made Easy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#4A7FD4;--blue2:#3A8DFF;--purple:#7B5EA7;--orange:#E8921A;
+  --dark:#07090F;--dark2:#0C0E18;--dark3:#111422;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);
+  --text:#ECEEF5;--muted:#7A82A0;--soft:#B0B8D0;
+  --grad:linear-gradient(135deg,#4A7FD4 0%,#7B5EA7 50%,#E8921A 100%);
+  --grad2:linear-gradient(90deg,#3A8DFF,#7B5EA7);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--dark);color:var(--text);line-height:1.7;overflow-x:hidden}
 
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:74px;
+  background:rgba(7,9,15,0.82);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo img{height:36px}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;letter-spacing:.03em;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{
+  background:var(--grad);border:none;border-radius:50px;
+  color:#fff;font-family:'Outfit',sans-serif;font-size:13px;
+  font-weight:600;padding:10px 22px;cursor:pointer;text-decoration:none;
+  letter-spacing:.02em;transition:opacity .2s;white-space:nowrap;
+}
+.nav-cta:hover{opacity:.87}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.nav-burger span{width:22px;height:2px;background:var(--soft);border-radius:2px;transition:all .3s}
+.mobile-menu{
+  display:none;position:fixed;top:74px;left:0;right:0;
+  background:rgba(7,9,15,0.97);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);padding:1.5rem 6%;
+  flex-direction:column;gap:1.2rem;z-index:199;
+}
+.mobile-menu a{color:var(--soft);text-decoration:none;font-size:15px;font-weight:500}
+.mobile-menu.open{display:flex}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:130px 6% 90px;position:relative;overflow:hidden;
+}
+.hero-g1{position:absolute;top:5%;left:50%;transform:translateX(-50%);width:900px;height:600px;pointer-events:none;background:radial-gradient(ellipse,rgba(123,94,167,0.14) 0%,transparent 65%);filter:blur(70px)}
+.hero-g2{position:absolute;bottom:10%;left:5%;width:500px;height:400px;pointer-events:none;background:radial-gradient(ellipse,rgba(74,127,212,0.09) 0%,transparent 65%);filter:blur(70px)}
+.hero-g3{position:absolute;bottom:10%;right:5%;width:400px;height:350px;pointer-events:none;background:radial-gradient(ellipse,rgba(232,146,26,0.07) 0%,transparent 65%);filter:blur(70px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(74,127,212,0.08);border:1px solid rgba(74,127,212,0.2);border-radius:50px;padding:6px 18px 6px 12px;margin-bottom:2.5rem}
+.edot{width:7px;height:7px;border-radius:50%;background:var(--blue2);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 6px var(--blue2)}50%{opacity:.3;box-shadow:none}}
+.eyebrow span{font-size:11.5px;font-weight:600;color:rgba(140,185,255,0.9);letter-spacing:.1em;text-transform:uppercase}
+h1.hero-h{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,6vw,5.2rem);font-weight:700;
+  line-height:1.07;margin-bottom:1.6rem;letter-spacing:-.02em;max-width:860px;
+}
+h1.hero-h em{font-style:italic;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(.95rem,1.6vw,1.12rem);color:var(--muted);max-width:560px;margin:0 auto 1rem;font-weight:300;line-height:1.85}
+.hero-trust{font-size:.88rem;color:rgba(255,255,255,0.3);margin-bottom:2.8rem;font-style:italic}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:5rem}
+.btn-g{background:var(--grad);border:none;border-radius:50px;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;padding:14px 34px;cursor:pointer;text-decoration:none;letter-spacing:.02em;transition:opacity .2s,transform .2s;display:inline-block}
+.btn-g:hover{opacity:.87;transform:translateY(-1px)}
+.btn-o{background:transparent;border:1px solid rgba(255,255,255,0.13);border-radius:50px;color:var(--soft);font-family:'Outfit',sans-serif;font-size:15px;font-weight:500;padding:14px 34px;text-decoration:none;transition:all .2s;display:inline-block}
+.btn-o:hover{border-color:rgba(255,255,255,0.25);color:var(--text)}
+.hero-stats{display:flex;border-top:1px solid var(--border);width:100%;max-width:780px}
+.hstat{flex:1;padding:2rem 1.5rem;border-right:1px solid var(--border);text-align:center}
+.hstat:last-child{border-right:none}
+.hval{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;display:block;margin-bottom:.35rem}
+.hlbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-weight:500;line-height:1.5}
+
+/* ── TRUST BAR ── */
+.trust-bar{padding:40px 6%;background:var(--dark2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.trust-inner{display:flex;align-items:center;gap:2.5rem;justify-content:center;flex-wrap:wrap}
+.t-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:600;white-space:nowrap}
+.t-sep{width:1px;height:22px;background:var(--border2)}
+.t-brand{font-size:13px;font-weight:600;color:rgba(255,255,255,0.2);letter-spacing:.06em;text-transform:uppercase}
+
+/* ── SHARED SECTION ── */
+section{padding:110px 6%;position:relative}
+.lbl{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--orange);margin-bottom:1.2rem}
+.stitle{font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,3.5vw,2.9rem);font-weight:700;line-height:1.12;margin-bottom:1rem;letter-spacing:-.015em}
+.ssub{color:var(--muted);font-size:.98rem;max-width:520px;font-weight:300;line-height:1.85;margin-bottom:3.5rem}
+.tc{text-align:center}.tc .ssub{margin-left:auto;margin-right:auto}
+.gline{height:1px;background:linear-gradient(90deg,transparent,rgba(123,94,167,0.35),transparent)}
+
+/* ── PROBLEMS ── */
+.prob-bg{background:var(--dark2)}
+.prob-stat{
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;
+  flex-wrap:wrap;margin-bottom:3rem;
+  background:rgba(232,146,26,0.06);border:1px solid rgba(232,146,26,0.15);
+  border-radius:14px;padding:1.5rem 2rem;
+}
+.prob-stat p{font-size:.92rem;color:var(--soft);line-height:1.7;max-width:600px}
+.prob-stat p strong{color:var(--orange)}
+.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.prob-cell{background:var(--dark2);padding:2.4rem 2rem;transition:background .25s;position:relative}
+.prob-cell:hover{background:rgba(74,127,212,0.04)}
+.prob-ico{font-size:1.6rem;margin-bottom:.8rem;display:block}
+.prob-n{font-size:.92rem;font-weight:600;margin-bottom:.5rem}
+.prob-cell p{font-size:13px;color:var(--muted);line-height:1.75}
+
+/* ── WHY BRINGIT ── */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:2rem}
+.why-card{
+  background:var(--dark2);border:1px solid var(--border);
+  border-radius:14px;padding:1.8rem;display:flex;gap:1rem;
+  align-items:flex-start;transition:border-color .25s;
+}
+.why-card:hover{border-color:rgba(123,94,167,0.3)}
+.why-ico{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:rgba(74,127,212,0.1);display:flex;align-items:center;justify-content:center;font-size:17px}
+.why-card h4{font-size:.9rem;font-weight:600;margin-bottom:.35rem}
+.why-card p{font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── HOW IT WORKS ── */
+.how-bg{background:var(--dark2)}
+.how-row{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-bottom:5rem}
+.how-row:last-child{margin-bottom:0}
+.how-row.rev .how-vis{order:-1}
+.how-vis{background:var(--dark3);border:1px solid var(--border);border-radius:18px;padding:1.8rem;display:flex;flex-direction:column;gap:.75rem;position:relative;overflow:hidden}
+.how-vis::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(74,127,212,0.07),transparent);pointer-events:none}
+.vrow{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:9px;padding:.7rem .9rem}
+.vico{width:26px;height:26px;border-radius:7px;background:rgba(74,127,212,0.12);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.vrow span{font-size:12.5px;color:var(--soft)}
+.vbadge{display:inline-block;font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;margin-left:auto;white-space:nowrap}
+.vbadge.d{background:rgba(74,212,127,0.1);color:#5DD98A}
+.vbadge.l{background:rgba(74,127,212,0.1);color:#7AABF5}
+.vbadge.a{background:rgba(232,146,26,0.1);color:#F5B050}
+.how-txt .snum{font-family:'Cormorant Garamond',serif;font-size:4.5rem;font-weight:700;color:rgba(255,255,255,0.04);line-height:1;display:block;margin-bottom:.4rem}
+.how-txt h3{font-size:1.35rem;font-weight:600;margin-bottom:.8rem;letter-spacing:-.01em}
+.how-txt p{font-size:.93rem;color:var(--muted);line-height:1.85;font-weight:300}
+
+/* ── PRICING ── */
+.pkg-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;align-items:start}
+.pkg{border:1px solid var(--border);border-radius:20px;padding:2.5rem 2rem;background:var(--dark2);position:relative;transition:border-color .25s}
+.pkg:hover{border-color:rgba(255,255,255,0.13)}
+.pkg.hi{box-shadow:0 0 0 1.5px rgba(123,94,167,0.5),0 24px 60px rgba(0,0,0,0.4);border-color:transparent}
+.hi-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--grad);color:#fff;font-size:10px;font-weight:700;padding:4px 16px;border-radius:20px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+.pkg-tier{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);margin-bottom:.4rem}
+.pkg-name{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:700;margin-bottom:.3rem}
+.pkg-price{font-size:2.5rem;font-weight:700;line-height:1;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.6rem 0 .25rem}
+.pkg-price sub{font-size:.9rem;font-weight:400;color:var(--muted);-webkit-text-fill-color:var(--muted)}
+.pkg-for{font-size:13px;color:var(--muted);margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);line-height:1.65}
+.pkg-feats{list-style:none;display:flex;flex-direction:column;gap:.65rem;margin-bottom:2rem}
+.pkg-feats li{font-size:13px;color:var(--soft);display:flex;align-items:flex-start;gap:9px;line-height:1.55}
+.pkg-feats li::before{content:'';flex-shrink:0;margin-top:7px;width:5px;height:5px;border-radius:50%;background:var(--grad)}
+.pkg-feats li.dim{color:var(--muted)}.pkg-feats li.dim::before{background:rgba(255,255,255,0.12)}
+.pbtn{display:block;width:100%;text-align:center;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;padding:13px;cursor:pointer;text-decoration:none;transition:all .2s;letter-spacing:.02em}
+.pbtn.s{background:var(--grad);color:#fff;border:none}.pbtn.s:hover{opacity:.87}
+.pbtn.l{background:transparent;border:1px solid var(--border);color:var(--soft)}.pbtn.l:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+.addons{margin-top:3rem;text-align:center}
+.addon-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.13em;color:var(--muted);font-weight:600;margin-bottom:1.2rem}
+.addon-flex{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center}
+.addon{background:var(--dark2);border:1px solid var(--border);border-radius:50px;padding:10px 22px;display:flex;align-items:center;gap:12px}
+.addon span:first-child{font-size:13px;color:var(--muted)}
+.addon-v{font-size:13px;font-weight:600;color:var(--orange)}
+
+/* ── REVENUE STATS ── */
+.rev-bg{background:var(--dark2)}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:2.5rem}
+.rc{background:var(--dark2);padding:2.5rem 2rem;text-align:center}
+.rv-ico{font-size:1.8rem;margin-bottom:.8rem;display:block}
+.rv-val{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:700;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;line-height:1;margin-bottom:.5rem}
+.rc p{font-size:12.5px;color:var(--muted);line-height:1.65}
+.rev-close{background:rgba(74,127,212,0.06);border:1px solid rgba(74,127,212,0.15);border-radius:14px;padding:2rem 2.5rem;text-align:center;max-width:600px;margin:0 auto}
+.rev-close p{font-size:1rem;color:var(--soft);line-height:1.75}
+.rev-close p strong{color:var(--text)}
+
+/* ── TESTIMONIALS ── */
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.tcard{background:var(--dark2);border:1px solid var(--border);border-radius:16px;padding:2rem;transition:border-color .25s}
+.tcard:hover{border-color:rgba(123,94,167,0.3)}
+.tcard-stars{color:var(--orange);font-size:14px;margin-bottom:1rem;letter-spacing:2px}
+.tcard-text{font-size:.92rem;color:var(--soft);line-height:1.8;font-style:italic;margin-bottom:1.5rem}
+.tcard-author{display:flex;align-items:center;gap:.9rem}
+.tcard-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.tcard-name{font-size:.88rem;font-weight:600}
+.tcard-role{font-size:12px;color:var(--muted)}
+
+/* ── ABOUT ── */
+.about-bg{background:var(--dark2)}
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-q{margin-top:2rem;padding:2rem;background:var(--dark);border:1px solid var(--border);border-radius:16px;position:relative}
+.about-q::before{content:'\201C';position:absolute;top:-.7rem;left:1.5rem;font-family:'Cormorant Garamond',serif;font-size:5rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.about-q p{font-size:.92rem;color:var(--soft);font-style:italic;line-height:1.85;margin-top:.8rem}
+.about-q footer{margin-top:.8rem;font-size:12px;color:var(--muted);font-style:normal}
+.about-cards{display:flex;flex-direction:column;gap:1rem}
+.acard{background:var(--dark);border:1px solid var(--border);border-radius:14px;padding:1.4rem 1.8rem;display:flex;align-items:flex-start;gap:1.2rem;transition:border-color .25s}
+.acard:hover{border-color:rgba(74,127,212,0.25)}
+.aico{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:rgba(123,94,167,0.1);display:flex;align-items:center;justify-content:center;font-size:17px}
+.acard h4{font-size:.87rem;font-weight:600;margin-bottom:3px}
+.acard p{font-size:12.5px;color:var(--muted);line-height:1.65}
+
+/* ── FAQ ── */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:.8rem}
+.faq-item{background:var(--dark2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:1.4rem 1.8rem;cursor:pointer;font-size:.95rem;font-weight:500;gap:1rem;transition:color .2s}
+.faq-q:hover{color:var(--blue2)}
+.faq-arrow{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;transition:transform .3s,background .2s}
+.faq-item.open .faq-arrow{transform:rotate(180deg);background:rgba(74,127,212,0.15)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease,padding .3s}
+.faq-a-inner{padding:0 1.8rem 1.4rem;font-size:.9rem;color:var(--muted);line-height:1.8}
+.faq-item.open .faq-a{max-height:200px}
+
+/* ── FINAL CTA ── */
+.fcta-bg{
+  text-align:center;position:relative;overflow:hidden;
+  background:var(--dark2);
+}
+.fcta-bg::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(123,94,167,0.11) 0%,transparent 70%);pointer-events:none}
+.fcta-box{max-width:680px;margin:0 auto;position:relative}
+.fcta-box h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1rem;letter-spacing:-.01em;line-height:1.1}
+.fcta-box p{color:var(--muted);margin-bottom:2.5rem;font-size:1rem;font-weight:300}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.contact-info h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;margin-bottom:1rem}
+.contact-info p{font-size:.93rem;color:var(--muted);line-height:1.8;margin-bottom:2rem;font-weight:300}
+.cinfo-item{display:flex;align-items:center;gap:.9rem;margin-bottom:1rem}
+.cinfo-ico{width:36px;height:36px;border-radius:9px;background:rgba(74,127,212,0.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.cinfo-item a{font-size:.9rem;color:var(--soft);text-decoration:none;transition:color .2s}
+.cinfo-item a:hover{color:var(--blue2)}
+.cform{background:var(--dark2);border:1px solid var(--border);border-radius:20px;padding:2.5rem}
+.cform-grid{display:flex;flex-direction:column;gap:.85rem}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+input,textarea,select{background:rgba(255,255,255,0.035);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;padding:13px 16px;width:100%;transition:border-color .2s;outline:none}
+input:focus,textarea:focus,select:focus{border-color:rgba(123,94,167,0.4)}
+input::placeholder,textarea::placeholder{color:var(--muted)}
+select option{background:var(--dark3);color:var(--text)}
+textarea{resize:vertical;min-height:100px}
+.fsub{background:var(--grad);border:none;border-radius:10px;color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;padding:15px;width:100%;cursor:pointer;transition:opacity .2s,transform .2s;margin-top:.3rem;letter-spacing:.02em}
+.fsub:hover{opacity:.87;transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{background:var(--dark);border-top:1px solid var(--border);padding:3rem 6%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+footer img{height:28px}
+.fcopy{font-size:12px;color:var(--muted)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-size:12px;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--soft)}
+
+/* ── REVEAL ── */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv2{opacity:0;transform:translateY(20px);transition:opacity .55s ease .15s,transform .55s ease .15s}
+.rv2.on{opacity:1;transform:translateY(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .pkg-row{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+}
+@media(max-width:960px){
+  .prob-grid{grid-template-columns:1fr 1fr}
+  .rev-grid{grid-template-columns:1fr 1fr}
+  .how-row{grid-template-columns:1fr;gap:2.5rem}
+  .how-row.rev .how-vis{order:0}
+  .about-wrap{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .prob-grid{grid-template-columns:1fr}
+  .rev-grid{grid-template-columns:1fr}
+  .hero-stats{flex-direction:column}
+  .hstat{border-right:none;border-bottom:1px solid var(--border)}
+  .hstat:last-child{border-bottom:none}
+  .crow{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center}
+  .footer-links{justify-content:center}
+  .cform{padding:1.8rem 1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><img src="LOGO_1_1_no_BG.png" alt="BringIT"></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Book Free Consultation</a>
+  <div class="nav-burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="toggleMenu()">Home</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="#contact" class="nav-cta" style="text-align:center" onclick="toggleMenu()">Book Free Consultation</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-g1"></div><div class="hero-g2"></div><div class="hero-g3"></div>
+  <div class="eyebrow"><div class="edot"></div><span>Remote Operations &amp; Revenue Control for Restaurants</span></div>
+  <h1 class="hero-h">Stop Losing Money From<br><em>Small Daily Mistakes</em></h1>
+  <p class="hero-sub">BringIT helps restaurant owners stay in control with remote back-office operations, revenue protection, and daily accountability systems.</p>
+  <p class="hero-trust">We don't replace your manager — we make sure nothing slips.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-g">Book Free Strategy Call</a>
+    <a href="#pricing" class="btn-o">See Pricing</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hval" data-target="15">0</span><span class="hlbl">Revenue Leakage<br>Prevented (%)</span></div>
+    <div class="hstat"><span class="hval">$150K+</span><span class="hlbl">Hidden Annual Loss<br>Per Store</span></div>
+    <div class="hstat"><span class="hval">6</span><span class="hlbl">Major Franchise<br>Brands Supported</span></div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar rv">
+  <div class="trust-inner">
+    <span class="t-lbl">Operational experience across</span>
+    <div class="t-sep"></div>
+    <span class="t-brand">Cold Stone Creamery</span>
+    <span class="t-brand">Dunkin'</span>
+    <span class="t-brand">Baskin Robbins</span>
+    <span class="t-brand">Charleys Cheesesteaks &amp; Wings</span>
+    <span class="t-brand">Domino's</span>
+    <span class="t-brand">Papa John's</span>
+  </div>
+</div>
+
+<!-- PROBLEMS -->
+<section class="prob-bg" id="services">
+  <div class="tc rv">
+    <span class="lbl">The Hidden Problem</span>
+    <h2 class="stitle">The Hidden Leaks Costing Restaurants Thousands</h2>
+    <p class="ssub">Restaurants lose 6%–15%+ of annual revenue through preventable operational leakage. A $1M store can silently lose $150,000 every year.</p>
+  </div>
+  <div class="prob-stat rv">
+    <p>The average restaurant owner is too busy handling rush hours, staff shortages, and customer complaints to notice the <strong>slow, daily revenue leaks</strong> that compound into massive annual losses — until it's too late.</p>
+  </div>
+  <div class="prob-grid rv">
+    <div class="prob-cell"><span class="prob-ico">📦</span><p class="prob-n">Inventory Shrinkage</p><p>Food stolen, wasted, or given away without records. Employees taking items while management is focused elsewhere. Every item unaccounted for is direct profit loss.</p></div>
+    <div class="prob-cell"><span class="prob-ico">📱</span><p class="prob-n">Missed Online Orders</p><p>UberEats, DoorDash, Grubhub going offline during rush hours. Tablets switched off. Slow prep times triggering platform blackouts. Every minute offline is money gone.</p></div>
+    <div class="prob-cell"><span class="prob-ico">⏱️</span><p class="prob-n">Labor Inefficiency</p><p>Employees clocking in early, leaving late, or not working at all. Clock manipulation draining payroll. Managers turning a blind eye while owners pay the difference.</p></div>
+    <div class="prob-cell"><span class="prob-ico">💸</span><p class="prob-n">Refund Abuse</p><p>False food quality complaints filed on delivery apps. Fraudulent refund requests accepted without dispute. Thousands lost monthly to claims that could be contested.</p></div>
+    <div class="prob-cell"><span class="prob-ico">👥</span><p class="prob-n">Staff Accountability Issues</p><p>Untracked attendance, unreported incidents, cash stolen from registers. Without consistent monitoring, employee misconduct goes unseen and unchallenged.</p></div>
+    <div class="prob-cell"><span class="prob-ico">📋</span><p class="prob-n">Compliance &amp; Deadline Failures</p><p>Missed license renewals, unpaid utility bills, forgotten franchise submissions, equipment repairs ignored. Small lapses that become expensive emergencies.</p></div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- WHY BRINGIT -->
+<section>
+  <div class="rv">
+    <span class="lbl">Why BringIT</span>
+    <h2 class="stitle">Why Owners Choose BringIT</h2>
+    <p class="ssub">We're not a virtual assistant service. We are a remote operational control system built by someone who has worked inside real restaurant operations for years.</p>
+  </div>
+  <div class="why-grid rv">
+    <div class="why-card"><div class="why-ico">🛡️</div><div><h4>We Prevent Small Mistakes That Quietly Cost Money</h4><p>Daily monitoring catches issues before they become losses. Follow-ups ensure nothing slips through the cracks and becomes an expensive problem weeks later.</p></div></div>
+    <div class="why-card"><div class="why-ico">📡</div><div><h4>We Monitor Delivery Platforms So You Don't Miss Sales</h4><p>UberEats, DoorDash, Grubhub, and OLO monitored daily. Platform outages caught and resolved fast. Missed orders flagged before the revenue disappears permanently.</p></div></div>
+    <div class="why-card"><div class="why-ico">✅</div><div><h4>We Track Tasks Until They Are Completed</h4><p>Vendor follow-ups, equipment repairs, permit renewals — all tracked in a structured system. We chase every open item until it is closed. Nothing forgotten.</p></div></div>
+    <div class="why-card"><div class="why-ico">💰</div><div><h4>We Reduce Refund Losses</h4><p>False refund claims disputed with delivery platforms. Weekly volume maximized. Recovery tracked and reported so owners see exactly what money was saved.</p></div></div>
+    <div class="why-card"><div class="why-ico">👁️</div><div><h4>We Improve Owner Visibility Without Being In-Store</h4><p>CCTV monitoring, POS reports, attendance tracking, and daily summaries give owners a clear picture of operations — without needing to physically be present.</p></div></div>
+    <div class="why-card"><div class="why-ico">📈</div><div><h4>We Help Owners Scale Without Chaos</h4><p>Multi-store reporting, cross-location performance tracking, and expansion support systems so growth doesn't mean losing control of what you've already built.</p></div></div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- HOW IT WORKS -->
+<section class="how-bg">
+  <div class="tc rv" style="margin-bottom:5rem">
+    <span class="lbl">The Process</span>
+    <h2 class="stitle">How BringIT Works</h2>
+    <p class="ssub">Four steps that turn operational chaos into controlled, protected revenue — starting from day one.</p>
+  </div>
+
+  <div class="how-row rv">
+    <div class="how-txt">
+      <span class="snum">01</span>
+      <h3>We Identify Operational Leaks</h3>
+      <p>We conduct a full back-office review — platforms, POS data, attendance records, complaint history, review profiles, and vendor status. Every leak gets identified before we even begin monitoring.</p>
+    </div>
+    <div class="how-vis">
+      <div class="vrow"><div class="vico">📊</div><span>POS Report — Revenue vs Deposit Gap</span><span class="vbadge a">Gap Found</span></div>
+      <div class="vrow"><div class="vico">⭐</div><span>Google Reviews — 6 unanswered (14 days)</span><span class="vbadge a">Risk</span></div>
+      <div class="vrow"><div class="vico">📱</div><span>DoorDash — 3 offline incidents last week</span><span class="vbadge a">Flagged</span></div>
+      <div class="vrow"><div class="vico">📋</div><span>License renewal — overdue 22 days</span><span class="vbadge a">Critical</span></div>
+      <div class="vrow"><div class="vico">👤</div><span>Payroll — 4 clock manipulation patterns</span><span class="vbadge a">Escalate</span></div>
+    </div>
+  </div>
+
+  <div class="how-row rev rv">
+    <div class="how-vis">
+      <div class="vrow"><div class="vico">🔍</div><span>Platform sweep — All stores</span><span class="vbadge d">Done 5:00 PM</span></div>
+      <div class="vrow"><div class="vico">📝</div><span>1-star Google Review — Response sent</span><span class="vbadge d">Replied</span></div>
+      <div class="vrow"><div class="vico">⚠️</div><span>UberEats offline — Store 2 restored</span><span class="vbadge d">Resolved</span></div>
+      <div class="vrow"><div class="vico">📞</div><span>Vendor follow-up — Equipment repair</span><span class="vbadge l">In Progress</span></div>
+      <div class="vrow"><div class="vico">📋</div><span>Daily task log — 11 items completed</span><span class="vbadge d">Logged</span></div>
+    </div>
+    <div class="how-txt">
+      <span class="snum">02</span>
+      <h3>We Monitor + Follow Up Daily</h3>
+      <p>On a fixed schedule Saturday to Thursday, we sweep every platform, review channel, task list, and operational system. Every open issue is chased until closed — no exceptions, no forgotten items.</p>
+    </div>
+  </div>
+
+  <div class="how-row rv">
+    <div class="how-txt">
+      <span class="snum">03</span>
+      <h3>We Protect Revenue + Reduce Losses</h3>
+      <p>Disputes filed, refunds contested, attendance verified, cash discrepancies flagged, and vendor delays escalated. We actively recover money that most owners never even realize they're losing.</p>
+    </div>
+    <div class="how-vis">
+      <div class="vrow"><div class="vico">💰</div><span>False refund claim — Disputed DoorDash</span><span class="vbadge d">Recovered $47</span></div>
+      <div class="vrow"><div class="vico">🚨</div><span>Cash shortage $340 — Manager alerted</span><span class="vbadge d">Escalated</span></div>
+      <div class="vrow"><div class="vico">📷</div><span>CCTV — Unauthorized food incident logged</span><span class="vbadge a">Reported</span></div>
+      <div class="vrow"><div class="vico">💡</div><span>OLO bill — Restored after lapse</span><span class="vbadge d">Fixed</span></div>
+      <div class="vrow"><div class="vico">📈</div><span>Weekly recovery total: $1,240</span><span class="vbadge l">Tracked</span></div>
+    </div>
+  </div>
+
+  <div class="how-row rev rv">
+    <div class="how-vis">
+      <div class="vrow"><div class="vico">📊</div><span>Weekly executive summary — All stores</span><span class="vbadge d">Sent</span></div>
+      <div class="vrow"><div class="vico">📈</div><span>Store 1 vs Store 2 — Performance gap</span><span class="vbadge l">Identified</span></div>
+      <div class="vrow"><div class="vico">🛡️</div><span>New store setup checklist — 80% complete</span><span class="vbadge l">On Track</span></div>
+      <div class="vrow"><div class="vico">✅</div><span>Open tasks: 3 / Closed this week: 18</span><span class="vbadge d">Logged</span></div>
+    </div>
+    <div class="how-txt">
+      <span class="snum">04</span>
+      <h3>You Gain Control + Scale Confidently</h3>
+      <p>Clear weekly summaries, cross-store performance reporting, and expansion support systems give you the visibility to make real decisions — and the confidence to grow without losing control of what you've built.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="tc rv">
+    <span class="lbl">Pricing</span>
+    <h2 class="stitle">Simple, Transparent Pricing</h2>
+    <p class="ssub">Every package includes the same dedication — scaled to your operation. Saturday to Thursday, assigned daily time windows per store.</p>
+  </div>
+  <div class="pkg-row rv">
+    <div class="pkg">
+      <div class="pkg-tier">Starter</div>
+      <div class="pkg-name">Basic Relief</div>
+      <div class="pkg-price">$149<sub>/mo per store</sub></div>
+      <div class="pkg-for">Best for single-store owners who want affordable daily back-office support and peace of mind.</div>
+      <ul class="pkg-feats">
+        <li>Review &amp; message replies — Google, Yelp, DoorDash, UberEats, Grubhub</li>
+        <li>Complaint logging &amp; basic handling</li>
+        <li>Daily reminders — renewals, deadlines, tasks</li>
+        <li>Follow-up tracking — nothing gets missed</li>
+        <li>Calendar &amp; appointment scheduling</li>
+        <li>Basic admin &amp; data entry</li>
+        <li>Task tracking — logged &amp; followed every day</li>
+        <li>1–2 operational tasks per day</li>
+        <li class="dim">Platform monitoring — not included</li>
+        <li class="dim">Staff tracking — not included</li>
+      </ul>
+      <a href="#contact" class="pbtn l">Get Started</a>
+    </div>
+    <div class="pkg hi">
+      <div class="hi-badge">Most Popular</div>
+      <div class="pkg-tier">Growth</div>
+      <div class="pkg-name">Full Back Office</div>
+      <div class="pkg-price">$299<sub>/mo per store</sub></div>
+      <div class="pkg-for">Best for busy owners who want daily operational control and fewer revenue leaks across their store.</div>
+      <ul class="pkg-feats">
+        <li>Everything in Starter, plus:</li>
+        <li>Full customer complaint communication handling</li>
+        <li>Vendor &amp; utility coordination — calls, follow-ups</li>
+        <li>UberEats, DoorDash, Grubhub, OLO monitoring</li>
+        <li>Missed order &amp; downtime alerts</li>
+        <li>Basic dispute handling — refunds, missing orders</li>
+        <li>Hiring coordination &amp; shift issue reporting</li>
+        <li>Performance tracking &amp; weekly owner summary</li>
+        <li>Social media posting 1–2x per week</li>
+        <li>3–5 operational tasks per day</li>
+        <li>Extended support hours</li>
+      </ul>
+      <a href="#contact" class="pbtn s">Get Started</a>
+    </div>
+    <div class="pkg">
+      <div class="pkg-tier">Premium</div>
+      <div class="pkg-name">Operations Partner</div>
+      <div class="pkg-price">$499<sub>/mo per store</sub></div>
+      <div class="pkg-for">Best for multi-store owners who want full visibility, control, and a dedicated operations partner.</div>
+      <ul class="pkg-feats">
+        <li>Everything in Growth, plus:</li>
+        <li>Staff attendance tracking via POS</li>
+        <li>Inventory follow-up &amp; procurement coordination</li>
+        <li>Bill tracking &amp; payment coordination</li>
+        <li>Refund &amp; loss tracking with recovery reporting</li>
+        <li>CCTV review &amp; incident investigation</li>
+        <li>Legal &amp; insurance coordination support</li>
+        <li>Escalation management — we push until resolved</li>
+        <li>Multi-location reporting &amp; executive summaries</li>
+        <li>New store setup &amp; franchise paperwork tracking</li>
+        <li>Dedicated account manager</li>
+        <li>Near real-time priority response</li>
+      </ul>
+      <a href="#contact" class="pbtn l">Get Started</a>
+    </div>
+  </div>
+  <div class="addons rv">
+    <div class="addon-lbl">Optional Add-Ons</div>
+    <div class="addon-flex">
+      <div class="addon"><span>Extra social media content</span><span class="addon-v">$100–$200</span></div>
+      <div class="addon"><span>24/7 coverage</span><span class="addon-v">$150+</span></div>
+      <div class="addon"><span>Priority escalation — 1hr response</span><span class="addon-v">$100</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- REVENUE STATS -->
+<section class="rev-bg">
+  <div class="tc rv">
+    <span class="lbl">Revenue Reality</span>
+    <h2 class="stitle">Revenue Lost Is Revenue You Never See</h2>
+    <p class="ssub">These aren't estimates — they are documented patterns across U.S. restaurant operations. Your store faces every single one of them.</p>
+  </div>
+  <div class="rev-grid rv">
+    <div class="rc"><span class="rv-ico">📦</span><span class="rv-val">2–10%</span><p>of annual revenue lost to inventory waste and shrinkage</p></div>
+    <div class="rc"><span class="rv-ico">📱</span><span class="rv-val">3–15%</span><p>of online order revenue lost to platform downtime</p></div>
+    <div class="rc"><span class="rv-ico">⏱️</span><span class="rv-val">2–8%</span><p>of payroll wasted on labor inefficiency and time fraud</p></div>
+    <div class="rc"><span class="rv-ico">💳</span><span class="rv-val">1–5%</span><p>of revenue leaked through unmonitored POS discrepancies</p></div>
+    <div class="rc"><span class="rv-ico">💸</span><span class="rv-val">0.5–3%</span><p>of revenue lost to fraudulent refund abuse on delivery apps</p></div>
+    <div class="rc"><span class="rv-ico">⭐</span><span class="rv-val">30</span><p>customers lost for every single unanswered negative review</p></div>
+  </div>
+  <div class="rev-close rv">
+    <p><strong>Increasing sales by 10% is hard.</strong><br>Stopping 10% leakage is faster — and BringIT is built exactly to do that.</p>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="tc rv">
+    <span class="lbl">Testimonials</span>
+    <h2 class="stitle">What Restaurant Owners Say</h2>
+    <p class="ssub">Real operators. Real results. Real peace of mind.</p>
+  </div>
+  <div class="testi-grid rv">
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">"I had no idea how much was slipping through the cracks until BringIT started monitoring my store. Within the first month, they caught a cash discrepancy I never would have seen on my own. The weekly summaries alone changed how I run my business."</p>
+      <div class="tcard-author"><div class="tcard-avatar">M</div><div><div class="tcard-name">Marcus T.</div><div class="tcard-role">Franchise Owner — 2 Locations, Florida</div></div></div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">"My DoorDash and UberEats were going offline during lunch rush and I didn't even know. BringIT fixed that in the first week. They also handle all my Google reviews now. I don't have to think about it anymore — it just gets done."</p>
+      <div class="tcard-author"><div class="tcard-avatar">R</div><div><div class="tcard-name">Rachel D.</div><div class="tcard-role">Fast Casual Owner — Chicago, IL</div></div></div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-stars">★★★★★</div>
+      <p class="tcard-text">"Running 4 stores was becoming impossible. BringIT gives me visibility across all of them without me having to be there. The escalation system is the best part — if something is wrong, I hear about it immediately instead of finding out weeks later."</p>
+      <div class="tcard-author"><div class="tcard-avatar">J</div><div><div class="tcard-name">James K.</div><div class="tcard-role">Multi-Location Operator — Texas</div></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- ABOUT -->
+<section class="about-bg" id="about">
+  <div class="about-wrap">
+    <div class="rv">
+      <span class="lbl">The Founder</span>
+      <h2 class="stitle">Meet the Founder</h2>
+      <p class="ssub" style="max-width:100%">Fahad Siddique built BringIT from 5+ years of working daily inside real U.S. restaurant operations — not from theory, not from a business school idea, but from personally handling the exact problems that cost restaurant owners money every single day.</p>
+      <div class="about-q">
+        <p>I didn't need to research restaurant pain points. I've chased the missed follow-ups, uncovered hidden losses, caught employees stealing from the register, recovered delivery platforms during rush hours, handled legal cases, and tracked financial discrepancies. BringIT is simply that real experience turned into a structured system for owners who deserve better control.</p>
+        <footer>— Fahad Siddique, Founder &amp; Operations Director, BringIT</footer>
+      </div>
+    </div>
+    <div class="about-cards rv">
+      <div class="acard"><div class="aico">🏪</div><div><h4>6 Major Franchise Brands</h4><p>Cold Stone Creamery, Dunkin', Baskin Robbins, Charleys, Domino's, Papa John's — real daily operational experience across all of them for 5+ years.</p></div></div>
+      <div class="acard"><div class="aico">🔍</div><div><h4>Real Problems Solved</h4><p>Caught employees stealing cash and food, prevented platform outages, won a customer legal case, recovered unpaid OLO services, identified financial discrepancies owners couldn't see.</p></div></div>
+      <div class="acard"><div class="aico">📊</div><div><h4>Full Back-Office Experience</h4><p>Social media management, POS report analysis, review management, staff supervision, accounting support, vendor coordination — done daily across multiple brands simultaneously.</p></div></div>
+      <div class="acard"><div class="aico">🎓</div><div><h4>BBA in Marketing — North South University</h4><p>Academic foundation in business strategy combined with years of practical, field-level operational experience inside real U.S. restaurant stores.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="gline"></div>
+
+<!-- FAQ -->
+<section>
+  <div class="tc rv" style="margin-bottom:3rem">
+    <span class="lbl">FAQ</span>
+    <h2 class="stitle">Common Questions</h2>
+    <p class="ssub">Straight answers for restaurant owners who want to know exactly what they're getting.</p>
+  </div>
+  <div class="faq-list rv">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Are you replacing my manager?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">No. BringIT works behind the scenes to support your existing team — not replace them. We handle the tasks your manager doesn't have time for, and we help hold everyone accountable so your manager can focus on running the store properly. Think of us as the system watching the back end.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Do you work with franchises?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes — and we understand franchise operations specifically. We have hands-on experience working with Cold Stone Creamery, Dunkin', Baskin Robbins, Charleys Cheesesteaks & Wings, Domino's, and Papa John's. We understand franchise compliance requirements, platform structures, and the unique pressures franchise operators face.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Can you support multiple locations?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. Our Premium package is built specifically for multi-store operators. We offer cross-location reporting, executive summaries, comparative performance tracking, and dedicated account management so you have one clear picture across all your stores without having to chase information from multiple places.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Do you handle delivery app disputes?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes. False refund claims and fraudulent order disputes on UberEats, DoorDash, and Grubhub are a significant source of revenue leakage for most restaurant owners. We dispute these claims on your behalf up to the platform limits, track recovery weekly, and report exactly how much money was saved versus lost.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Is this only for large restaurants?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Not at all. Our Starter package at $149/month is designed specifically for single-store owners who need affordable daily support. The problems we solve — missed reviews, forgotten follow-ups, platform outages, unresolved complaints — affect every size of operation. The losses just scale with your volume.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)"><span>Who has access to my store systems?</span><div class="faq-arrow">▾</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Access is handled carefully and personally by Fahad Siddique, the BringIT founder. Sensitive credentials — banking, POS, CCTV — are managed directly and never shared without your explicit approval. For early clients, Fahad personally handles all access setup and operations.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fcta-bg">
+  <div class="fcta-box rv">
+    <span class="lbl">Get Started</span>
+    <h2>Your Store Runs Better With BringIT</h2>
+    <p>Let us handle the back office while you focus on growth. No long contracts, no complicated setup — just consistent, professional operational support from day one.</p>
+    <a href="#contact" class="btn-g">Book Free Strategy Call</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--dark)">
+  <div class="contact-grid rv">
+    <div class="contact-info">
+      <span class="lbl">Contact</span>
+      <h3>Let's Talk About Your Stores</h3>
+      <p>Book a free 15-minute strategy call. We'll identify your biggest operational gaps and show you exactly how BringIT can protect your revenue — no pressure, no commitment.</p>
+      <div class="cinfo-item"><div class="cinfo-ico">💬</div><a href="https://wa.me/8801351656330" target="_blank">WhatsApp: +880 1351-656330</a></div>
+      <div class="cinfo-item"><div class="cinfo-ico">✉️</div><a href="mailto:bringit.bpo@gmail.com">bringit.bpo@gmail.com</a></div>
+      <div style="margin-top:2rem;padding:1.5rem;background:var(--dark2);border:1px solid var(--border);border-radius:14px">
+        <p style="font-size:.88rem;color:var(--muted);line-height:1.75">📍 <strong style="color:var(--soft)">Response Time:</strong> We reply within 24 hours to all inquiries. WhatsApp is the fastest way to reach us for urgent questions.</p>
+      </div>
+    </div>
+    <div class="cform">
+      <form class="cform-grid" onsubmit="handleForm(event)">
+        <div class="crow">
+          <input type="text" placeholder="Your name" required>
+          <input type="text" placeholder="Business name">
+        </div>
+        <div class="crow">
+          <input type="email" placeholder="Email address" required>
+          <input type="tel" placeholder="WhatsApp number">
+        </div>
+        <select>
+          <option value="" disabled selected>Number of locations</option>
+          <option>1 location</option>
+          <option>2–3 locations</option>
+          <option>4–6 locations</option>
+          <option>7+ locations</option>
+        </select>
+        <textarea placeholder="What's your biggest operational challenge right now?"></textarea>
+        <button type="submit" class="fsub">Send Message →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="LOGO_1_1_no_BG.png" alt="BringIT">
+  <p class="fcopy">© 2025 BringIT. Remote Operations &amp; Revenue Control for Restaurants. All rights reserved.</p>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<script>
+// Scroll reveal
+const ob=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on')}}),{threshold:.1});
+document.querySelectorAll('.rv,.rv2').forEach(el=>ob.observe(el));
+
+// Mobile menu
+function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
+
+// FAQ
+function toggleFaq(el){
+  const item=el.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// Form
+function handleForm(e){
+  e.preventDefault();
+  const btn=e.target.querySelector('.fsub');
+  btn.textContent='Message Sent! We will reach out within 24 hours.';
+  btn.style.background='rgba(74,127,212,0.25)';
+  btn.disabled=true;
+}
+
+// Smooth nav close on link click
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+});
+</script>
+</body>
+</html>
