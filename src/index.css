@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Outfit", sans-serif;
+
+  --color-brand-blue: #4A7FD4;
+  --color-brand-gradient-blue: #3A8DFF;
+  --color-brand-purple: #7B5EA7;
+  --color-brand-orange: #E8921A;
+
+  --color-bg-primary: #07090F;
+  --color-bg-secondary: #0C0E18;
+  --color-bg-card: #111422;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-primary text-white font-sans antialiased selection:bg-brand-blue/30;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-blue via-brand-purple to-brand-orange;
+}
+
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius);
+}
+
+.gradient-border-bg {
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(to right, var(--color-brand-blue), var(--color-brand-purple), var(--color-brand-orange));
+  border-radius: calc(var(--radius) + 1px);
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.gradient-btn {
+  @apply bg-gradient-to-r from-brand-blue via-brand-gradient-blue to-brand-purple transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-blue/20;
+}
+
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
