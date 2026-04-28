@@ -17,12 +17,13 @@ import {
 // If you already have firebase configured in another file, import auth from there
 // ─────────────────────────────────────────────────────────────────────────────
 const firebaseConfig = {
-  apiKey: "REPLACE_WITH_YOUR_FIREBASE_API_KEY",
-  authDomain: "REPLACE_WITH_YOUR_AUTH_DOMAIN.firebaseapp.com",
-  projectId: "REPLACE_WITH_YOUR_PROJECT_ID",
-  storageBucket: "REPLACE_WITH_YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "REPLACE_WITH_YOUR_SENDER_ID",
-  appId: "REPLACE_WITH_YOUR_APP_ID"
+  apiKey: "AIzaSyCmFaSucPvyFIXt_mxfc8X-U6rDcrYJ1T8",
+  authDomain: "bringit-25.firebaseapp.com",
+  projectId: "bringit-25",
+  storageBucket: "bringit-25.firebasestorage.app.appspot.com",
+  messagingSenderId: "812546413996",
+  appId: "1:812546413996:web:26f3777ad763bfd76d9609"
+  measurementId: "G-DEXHDD6XFK"
 }
 
 const fbApp = getApps().length > 0 ? getApps()[0] : initializeApp(firebaseConfig)
