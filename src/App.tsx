@@ -35,7 +35,7 @@ const microsoftProvider = new OAuthProvider('microsoft.com')
 // 1. Go to formspree.io → Sign up free → Create a form
 // 2. Replace the URL below with your form endpoint
 // ─────────────────────────────────────────────────────────────────────────────
-const FORMSPREE_URL = 'https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID'
+const FORMSPREE_URL = 'https://formspree.io/f/mgorgakb'
 
 // WhatsApp & Email for contact modals
 const WA_NUMBER = '8801351656330'
